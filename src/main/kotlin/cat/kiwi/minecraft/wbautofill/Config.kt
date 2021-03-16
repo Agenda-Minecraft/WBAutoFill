@@ -1,5 +1,7 @@
 package cat.kiwi.minecraft.wbautofill
 
+import java.lang.ClassCastException
+
 object Config {
     var paddingDistance = -1
         set(value) {
@@ -44,7 +46,13 @@ object Config {
         with(WBAutoFillPlugin.plugin.config) {
             options().copyDefaults(true)
             paddingDistance = getInt("padding-distance")
-            enabledWorlds = getStringList("enabled-worlds").toSet() as LinkedHashSet<String>
+
+            enabledWorlds = try {
+                getStringList("enabled-worlds").toSet() as LinkedHashSet<String>
+            } catch (e: ClassCastException) {
+                linkedSetOf<String>(getString("enabled-worlds")!!.split("[")[1].split("]")[0])
+            }
+
             serverStartDelay = getLong("server-start-delay")
             playerQuitDelay = getLong("player-quit-delay")
             fillSpeed = getInt("fill-speed")

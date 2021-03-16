@@ -4,7 +4,6 @@ enable-auto-fill: true
 padding-distance: 208
 enabled-worlds:
   - world
-  - survival
 server-start-delay: 30
 player-quit-delay: 20
 fill-speed: 200

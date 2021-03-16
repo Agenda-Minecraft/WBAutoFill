@@ -35,6 +35,7 @@ class WBAFCmd : CommandExecutor {
                             }.let { FillTaskListener.taskPool = it }
                         }
                         println(infoPrefix("enabled."))
+                        println(infoPrefix("Enabled worlds detected: ${Config.enabledWorlds.joinToString(", ")}"))
                     }
                     "disable" -> Config.isEnabled = false.also {
                         FillTaskListener.taskPool.forEach {
@@ -61,6 +62,7 @@ class WBAFCmd : CommandExecutor {
                         println(infoPrefix("Fill speed changed to $it chunks per second."))
                     }
                     "reload" -> Config.readConfig().also {
+                        config.options().copyDefaults(true)
                         println(infoPrefix("Config file reloaded."))
                     }
                 }
