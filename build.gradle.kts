@@ -6,7 +6,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "6.1.0"
 }
 
-group = "me.moekiwisama"
+group = "kiwi.cat"
 version = "1.3-SNAPSHOT"
 
 repositories {
