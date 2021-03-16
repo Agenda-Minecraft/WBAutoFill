@@ -6,4 +6,4 @@ enabled-worlds:
   - world
 server-start-delay: 30
 player-quit-delay: 20
-fill-speed: 200
+fill-speed: 20
