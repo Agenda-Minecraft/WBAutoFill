@@ -1,5 +1,5 @@
 name: WBAutoFill
-version: 1.1.1
+version: 1.2
 depend: [WorldBorder]
 main: cat.kiwi.minecraft.wbautofill.WBAutoFillPlugin
 

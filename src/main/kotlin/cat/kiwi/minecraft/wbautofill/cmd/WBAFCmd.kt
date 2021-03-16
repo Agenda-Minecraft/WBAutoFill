@@ -28,7 +28,11 @@ class WBAFCmd : CommandExecutor {
             try {
                 when (args[0]) {
                     "enable" -> Config.isEnabled = true.also {
-
+                        if (Bukkit.getOnlinePlayers().size <= 1) {
+                            FillTaskListener.taskPool.map {
+                                Bukkit.getServer().scheduler.cancelTask(it)
+                            }
+                        }
                         println(infoPrefix("enabled."))
                     }
                     "disable" -> Config.isEnabled = false.also {
