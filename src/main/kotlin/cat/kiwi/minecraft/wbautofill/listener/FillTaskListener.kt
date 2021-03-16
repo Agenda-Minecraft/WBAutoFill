@@ -50,7 +50,7 @@ class FillTaskListener : Listener {
         val fillTask = WorldFillTask(
             Bukkit.getServer(),
             null,
-            "world",
+            fillWorld,
             Config.paddingDistance,
             Config.fillSpeed / 20,
             ticks,
