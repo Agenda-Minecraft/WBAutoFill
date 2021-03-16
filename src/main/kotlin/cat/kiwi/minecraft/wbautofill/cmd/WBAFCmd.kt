@@ -3,6 +3,7 @@ package cat.kiwi.minecraft.wbautofill.cmd
 import cat.kiwi.minecraft.wbautofill.Config
 import cat.kiwi.minecraft.wbautofill.WBAutoFillPlugin
 import cat.kiwi.minecraft.wbautofill.listener.FillTaskListener
+import cat.kiwi.minecraft.wbautofill.listener.startFill
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.command.Command
@@ -29,9 +30,9 @@ class WBAFCmd : CommandExecutor {
                 when (args[0]) {
                     "enable" -> Config.isEnabled = true.also {
                         if (Bukkit.getOnlinePlayers().size <= 1) {
-                            FillTaskListener.taskPool.map {
-                                Bukkit.getServer().scheduler.cancelTask(it)
-                            }
+                            Config.enabledWorlds.map {
+                                startFill(it, 0)
+                            }.let { FillTaskListener.taskPool = it }
                         }
                         println(infoPrefix("enabled."))
                     }

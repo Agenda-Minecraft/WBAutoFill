@@ -47,7 +47,7 @@ class FillTaskListener : Listener {
 
 }
 
-private fun startFill(fillWorld: String, delayInTicks: Long) =
+fun startFill(fillWorld: String, delayInTicks: Long) =
     with(WBAutoFillPlugin.plugin) {
         val ticks = 1
         val fillTask = WorldFillTask(
