@@ -13,6 +13,7 @@ class FillTaskListener : Listener {
     companion object {
         var taskPool = listOf<Int>()
     }
+
     private val logger = Bukkit.getLogger()
 
     init {

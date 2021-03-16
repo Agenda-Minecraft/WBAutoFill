@@ -37,7 +37,7 @@ class WBAFCmd : CommandExecutor {
                         println(infoPrefix("disabled."))
                     }
                     "padding" -> Config.paddingDistance = args[1].toInt().also {
-                        println(infoPrefix("Padding distance set to $it".))
+                        println(infoPrefix("Padding distance set to $it."))
                     }
                     "add" -> Config.addWorld(args[1].also {
                         println(infoPrefix("World: $it added."))

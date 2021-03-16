@@ -9,7 +9,7 @@ class WBAutoFillPlugin : JavaPlugin() {
         lateinit var plugin: WBAutoFillPlugin
     }
 
-    override fun onEnable() = kotlin.run{
+    override fun onEnable() = kotlin.run {
         logger.info("WBAutoFill is enabled!")
         plugin = this
         try {
@@ -24,7 +24,7 @@ class WBAutoFillPlugin : JavaPlugin() {
         server.pluginManager.registerEvents(FillTaskListener(), this)
     }
 
-    override fun onDisable() = kotlin.run{
+    override fun onDisable() = kotlin.run {
         logger.info("WBAutoFill is disabled!")
         saveConfig()
     }
