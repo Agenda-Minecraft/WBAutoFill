@@ -7,15 +7,17 @@ object Config {
             field = value
         }
     var enabledWorlds = linkedSetOf<String>()
-    fun addWorld(string: String) = kotlin.run {
-        enabledWorlds.add(string)
-        WBAutoFillPlugin.plugin.config.set("enabled-worlds", enabledWorlds.toList())
-    }
+    fun addWorld(string: String) =
+        with(WBAutoFillPlugin.plugin) {
+            enabledWorlds.add(string)
+            config.set("enabled-worlds", enabledWorlds.toList())
+        }
 
-    fun delWorld(string: String) = kotlin.run {
-        enabledWorlds.remove(string)
-        WBAutoFillPlugin.plugin.config.set("enabled-worlds", enabledWorlds.toList())
-    }
+    fun delWorld(string: String) =
+        with(WBAutoFillPlugin.plugin) {
+            enabledWorlds.remove(string)
+            config.set("enabled-worlds", enabledWorlds.toList())
+        }
 
     var serverStartDelay = 40L
         set(value) {

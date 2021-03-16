@@ -14,8 +14,6 @@ class FillTaskListener : Listener {
         var taskPool = listOf<Int>()
     }
 
-    private val logger = Bukkit.getLogger()
-
     init {
         if (Config.isEnabled) {
             Config.enabledWorlds.map {
@@ -26,26 +24,31 @@ class FillTaskListener : Listener {
     }
 
     @EventHandler
-    fun onPlayerQuit(event: PlayerQuitEvent) {
-        if (Bukkit.getOnlinePlayers().size <= 1) {
-            taskPool.map {
-                Bukkit.getServer().scheduler.cancelTask(it)
+    fun onPlayerQuit(event: PlayerQuitEvent) =
+        with(WBAutoFillPlugin.plugin) {
+            if (Bukkit.getOnlinePlayers().size <= 1) {
+                taskPool.map {
+                    Bukkit.getServer().scheduler.cancelTask(it)
+                }
             }
         }
-    }
 
     @EventHandler
-    fun onPlayerJoin(event: PlayerJoinEvent) {
-        taskPool.forEach { taskID ->
-            if (taskID != -1) {
-                Bukkit.getServer().scheduler.cancelTask(taskID)
+    fun onPlayerJoin(event: PlayerJoinEvent) =
+        with(WBAutoFillPlugin.plugin) {
+            taskPool.forEach { taskID ->
+                if (taskID != -1) {
+                    Bukkit.getServer().scheduler.cancelTask(taskID)
+                }
+                logger.info("Task $taskID cancelled.")
             }
-            logger.info("Task $taskID cancelled.")
         }
 
-    }
 
-    private fun startFill(fillWorld: String, delayInTicks: Long) = kotlin.run {
+}
+
+private fun startFill(fillWorld: String, delayInTicks: Long) =
+    with(WBAutoFillPlugin.plugin) {
         val ticks = 1
         val fillTask = WorldFillTask(
             Bukkit.getServer(),
@@ -72,5 +75,3 @@ class FillTaskListener : Listener {
         }
         fillTaskID
     }
-
-}

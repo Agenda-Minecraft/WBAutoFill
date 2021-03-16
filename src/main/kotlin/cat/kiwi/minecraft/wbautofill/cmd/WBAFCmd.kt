@@ -28,6 +28,7 @@ class WBAFCmd : CommandExecutor {
             try {
                 when (args[0]) {
                     "enable" -> Config.isEnabled = true.also {
+
                         println(infoPrefix("enabled."))
                     }
                     "disable" -> Config.isEnabled = false.also {
@@ -64,11 +65,13 @@ class WBAFCmd : CommandExecutor {
             true
         }
 
-    fun infoPrefix(string: String) = kotlin.run {
-        "${ChatColor.AQUA} [WBAutoFill] ${ChatColor.GOLD}$string"
-    }
+    fun infoPrefix(string: String) =
+        with(WBAutoFillPlugin.plugin) {
+            "${ChatColor.AQUA} [WBAutoFill] ${ChatColor.GOLD}$string"
+        }
 
-    fun errorPrefix(string: String) = kotlin.run {
-        "${ChatColor.RED} [WBAutoFill] ${ChatColor.GRAY}$string"
-    }
+    fun errorPrefix(string: String) =
+        with(WBAutoFillPlugin.plugin) {
+            "${ChatColor.RED} [WBAutoFill] ${ChatColor.GRAY}$string"
+        }
 }
