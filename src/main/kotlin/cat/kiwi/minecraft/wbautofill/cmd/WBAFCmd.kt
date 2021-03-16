@@ -11,20 +11,21 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 
 class WBAFCmd : CommandExecutor {
+    val helpInfo = infoPrefix("/wbaf enable - Enable auto fill.\n") +
+            infoPrefix("/wbaf disable - Disable auto fill.\n") +
+            infoPrefix("/wbaf padding <distance> - Set padding distance.\n") +
+            infoPrefix("/wbaf add <world> - Add a world to WBAF task.\n") +
+            infoPrefix("/wbaf del <world> - Remove a world from WBAF task.\n") +
+            infoPrefix("/wbaf server <second> - Set task start delay after server started.\n") +
+            infoPrefix("/wbaf quit <second> - Set task start delay after player left.\n") +
+            infoPrefix("/wbaf speed <chunks> - Chunks fill per second.\n") +
+            infoPrefix("/wbaf reload - Reload Config file.")
+
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>) =
+
         with(WBAutoFillPlugin.plugin) {
             if (args.isEmpty()) {
-                println(
-                    infoPrefix("/wbaf enable - Enable auto fill.\n") +
-                            infoPrefix("/wbaf disable - Disable auto fill.\n") +
-                            infoPrefix("/wbaf padding <distance> - Set padding distance.\n") +
-                            infoPrefix("/wbaf add <world> - Add a world to WBAF task.\n") +
-                            infoPrefix("/wbaf del <world> - Remove a world from WBAF task.\n") +
-                            infoPrefix("/wbaf server <second> - Set task start delay after server started.\n") +
-                            infoPrefix("/wbaf quit <second> - Set task start delay after player left.\n") +
-                            infoPrefix("/wbaf speed <chunks> - Chunks fill per second.\n") +
-                            infoPrefix("/wbaf reload - Reload Config file.")
-                )
+                println(helpInfo)
             }
             try {
                 when (args[0]) {
@@ -65,6 +66,7 @@ class WBAFCmd : CommandExecutor {
                         config.options().copyDefaults(true)
                         println(infoPrefix("Config file reloaded."))
                     }
+                    else -> println(helpInfo)
                 }
             } catch (e: Exception) {
                 println(errorPrefix("Please check args."))
