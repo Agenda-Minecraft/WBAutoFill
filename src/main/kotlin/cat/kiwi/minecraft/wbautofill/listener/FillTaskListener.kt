@@ -27,9 +27,9 @@ class FillTaskListener : Listener {
     fun onPlayerQuit(event: PlayerQuitEvent) =
         with(WBAutoFillPlugin.plugin) {
             if (Bukkit.getOnlinePlayers().size <= 1) {
-                taskPool.map {
-                    Bukkit.getServer().scheduler.cancelTask(it)
-                }
+                Config.enabledWorlds.map {
+                    startFill(it, 0)
+                }.let { FillTaskListener.taskPool = it }
             }
         }
 
