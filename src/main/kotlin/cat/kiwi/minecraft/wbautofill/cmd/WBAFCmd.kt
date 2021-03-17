@@ -30,7 +30,7 @@ class WBAFCmd : CommandExecutor {
             try {
                 when (args[0]) {
                     "enable" -> Config.isEnabled = true.also {
-                        if (Bukkit.getOnlinePlayers().size <= 1) {
+                        if (Bukkit.getOnlinePlayers().isEmpty()) {
                             Config.enabledWorlds.map {
                                 startFill(it, 0)
                             }.let { FillTaskListener.taskPool = it }
