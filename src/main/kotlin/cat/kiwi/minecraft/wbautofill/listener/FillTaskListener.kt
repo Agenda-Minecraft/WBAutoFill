@@ -28,7 +28,7 @@ class FillTaskListener : Listener {
         with(WBAutoFillPlugin.plugin) {
             if (Bukkit.getOnlinePlayers().size <= 1) {
                 Config.enabledWorlds.map {
-                    startFill(it, Config.playerQuitDelay)
+                    startFill(it, Config.playerQuitDelay * 20)
                 }.let { FillTaskListener.taskPool = it }
             }
         }
