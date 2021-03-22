@@ -4,6 +4,6 @@ enable-auto-fill: true
 padding-distance: 208
 enabled-worlds:
   - world
-server-start-delay: 30
-player-quit-delay: 20
+server-start-delay: 180
+player-quit-delay: 600
 fill-speed: 20

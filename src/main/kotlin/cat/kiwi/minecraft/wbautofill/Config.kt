@@ -1,49 +1,53 @@
 package cat.kiwi.minecraft.wbautofill
 
-import java.lang.ClassCastException
 
 object Config {
     var paddingDistance = -1
-        set(value) {
-            WBAutoFillPlugin.plugin.config.set("padding-distance", value)
+        set(value) = with(WBAutoFillPlugin.instance) {
+            config.set("padding-distance", value)
             field = value
+            saveConfig()
         }
     var enabledWorlds = linkedSetOf<String>()
-    fun addWorld(string: String) =
-        with(WBAutoFillPlugin.plugin) {
-            enabledWorlds.add(string)
-            config.set("enabled-worlds", enabledWorlds.toList())
-        }
+    fun addWorld(string: String) = with(WBAutoFillPlugin.instance) {
+        enabledWorlds.add(string)
+        config.set("enabled-worlds", enabledWorlds.toList())
+        saveConfig()
+    }
 
-    fun delWorld(string: String) =
-        with(WBAutoFillPlugin.plugin) {
-            enabledWorlds.remove(string)
-            config.set("enabled-worlds", enabledWorlds.toList())
-        }
+    fun delWorld(string: String) = with(WBAutoFillPlugin.instance) {
+        enabledWorlds.remove(string)
+        config.set("enabled-worlds", enabledWorlds.toList())
+        saveConfig()
+    }
 
     var serverStartDelay = 40L
-        set(value) {
-            WBAutoFillPlugin.plugin.config.set("server-start-delay", value)
+        set(value) = with(WBAutoFillPlugin.instance) {
+            config.set("server-start-delay", value)
             field = value
+            saveConfig()
         }
     var playerQuitDelay = 20L
-        set(value) {
-            WBAutoFillPlugin.plugin.config.set("player-quit-delay", value)
+        set(value) = with(WBAutoFillPlugin.instance) {
+            config.set("player-quit-delay", value)
             field = value
+            saveConfig()
         }
     var fillSpeed = 200
-        set(value) {
-            WBAutoFillPlugin.plugin.config.set("fill-speed", value)
+        set(value) = with(WBAutoFillPlugin.instance) {
+            config.set("fill-speed", value)
             field = value
+            saveConfig()
         }
     var isEnabled = true
-        set(value) {
-            WBAutoFillPlugin.plugin.config.set("enable-auto-fill", value)
+        set(value) = with(WBAutoFillPlugin.instance) {
+            config.set("enable-auto-fill", value)
             field = value
+            saveConfig()
         }
 
     fun readConfig() =
-        with(WBAutoFillPlugin.plugin.config) {
+        with(WBAutoFillPlugin.instance.config) {
             options().copyDefaults(true)
             paddingDistance = getInt("padding-distance")
 

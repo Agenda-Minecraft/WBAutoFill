@@ -6,12 +6,12 @@ import org.bukkit.plugin.java.JavaPlugin
 
 class WBAutoFillPlugin : JavaPlugin() {
     companion object {
-        lateinit var plugin: WBAutoFillPlugin
+        lateinit var instance: WBAutoFillPlugin
     }
 
     override fun onEnable() = kotlin.run {
         logger.info("WBAutoFill is enabled!")
-        plugin = this
+        instance = this
         try {
             Config.readConfig()
         } catch (e: Exception) {
@@ -26,6 +26,5 @@ class WBAutoFillPlugin : JavaPlugin() {
 
     override fun onDisable() = kotlin.run {
         logger.info("WBAutoFill is disabled!")
-        saveConfig()
     }
 }

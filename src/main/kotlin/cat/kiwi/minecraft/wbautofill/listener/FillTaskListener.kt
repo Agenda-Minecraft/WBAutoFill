@@ -25,7 +25,7 @@ class FillTaskListener : Listener {
 
     @EventHandler
     fun onPlayerQuit(event: PlayerQuitEvent) =
-        with(WBAutoFillPlugin.plugin) {
+        with(WBAutoFillPlugin.instance) {
             if (Bukkit.getOnlinePlayers().size <= 1) {
                 Config.enabledWorlds.map {
                     startFill(it, Config.playerQuitDelay * 20)
@@ -35,7 +35,7 @@ class FillTaskListener : Listener {
 
     @EventHandler
     fun onPlayerJoin(event: PlayerJoinEvent) =
-        with(WBAutoFillPlugin.plugin) {
+        with(WBAutoFillPlugin.instance) {
             taskPool.forEach { taskID ->
                 if (taskID != -1) {
                     Bukkit.getServer().scheduler.cancelTask(taskID)
@@ -48,7 +48,7 @@ class FillTaskListener : Listener {
 }
 
 fun startFill(fillWorld: String, delayInTicks: Long) =
-    with(WBAutoFillPlugin.plugin) {
+    with(WBAutoFillPlugin.instance) {
         val ticks = 1
         val fillTask = WorldFillTask(
             Bukkit.getServer(),
@@ -63,15 +63,15 @@ fun startFill(fillWorld: String, delayInTicks: Long) =
 
         if (fillTask.valid()) {
             val task = Bukkit.getServer().scheduler.scheduleSyncRepeatingTask(
-                WBAutoFillPlugin.plugin,
+                WBAutoFillPlugin.instance,
                 fillTask,
                 delayInTicks,
                 ticks.toLong()
             )
             fillTaskID = task
-            logger.info("WorldBorder map generation task for world $fillWorld started.")
+            logger.info("WBAF task for world $fillWorld started.")
         } else {
-            logger.info("The world map generation task failed to start.")
+            logger.info("WBAF task failed to start.")
         }
         fillTaskID
     }

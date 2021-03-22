@@ -11,7 +11,7 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 
 class WBAFCmd : CommandExecutor {
-    val helpInfo = infoPrefix("/wbaf enable - Enable auto fill.\n") +
+    private val helpInfo = infoPrefix("/wbaf enable - Enable auto fill.\n") +
             infoPrefix("/wbaf disable - Disable auto fill.\n") +
             infoPrefix("/wbaf padding <distance> - Set padding distance.\n") +
             infoPrefix("/wbaf add <world> - Add a world to WBAF task.\n") +
@@ -23,9 +23,9 @@ class WBAFCmd : CommandExecutor {
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>) =
 
-        with(WBAutoFillPlugin.plugin) {
+        with(WBAutoFillPlugin.instance) {
             if (args.isEmpty()) {
-                println(helpInfo)
+                sender.sendMessage(helpInfo)
             }
             try {
                 when (args[0]) {
@@ -35,52 +35,52 @@ class WBAFCmd : CommandExecutor {
                                 startFill(it, 0)
                             }.let { FillTaskListener.taskPool = it }
                         }
-                        println(infoPrefix("enabled."))
-                        println(infoPrefix("Enabled worlds detected: ${Config.enabledWorlds.joinToString(", ")}"))
+                        sender.sendMessage(infoPrefix("enabled."))
+                        sender.sendMessage(infoPrefix("Enabled worlds detected: ${Config.enabledWorlds.joinToString(", ")}"))
                     }
                     "disable" -> Config.isEnabled = false.also {
                         FillTaskListener.taskPool.forEach {
                             Bukkit.getServer().scheduler.cancelTask(it)
                         }
-                        println(infoPrefix("disabled."))
+                        sender.sendMessage(infoPrefix("disabled."))
                     }
                     "padding" -> Config.paddingDistance = args[1].toInt().also {
-                        println(infoPrefix("Padding distance set to $it."))
+                        sender.sendMessage(infoPrefix("Padding distance set to $it."))
                     }
                     "add" -> Config.addWorld(args[1].also {
-                        println(infoPrefix("World: $it added."))
+                        sender.sendMessage(infoPrefix("World: $it added."))
                     })
                     "del" -> Config.delWorld(args[1].also {
-                        println(infoPrefix("World: $it removed."))
+                        sender.sendMessage(infoPrefix("World: $it removed."))
                     })
                     "server" -> Config.serverStartDelay = args[1].toLong().also {
-                        println(infoPrefix("Task will delay for $it seconds after server started."))
+                        sender.sendMessage(infoPrefix("Task will delay for $it seconds after server started."))
                     }
                     "quit" -> Config.playerQuitDelay = args[1].toLong().also {
-                        println(infoPrefix("Task will delay for $it seconds after player left."))
+                        sender.sendMessage(infoPrefix("Task will delay for $it seconds after player left."))
                     }
                     "speed" -> Config.fillSpeed = args[1].toInt().also {
-                        println(infoPrefix("Fill speed changed to $it chunks per second."))
+                        sender.sendMessage(infoPrefix("Fill speed changed to $it chunks per second."))
                     }
                     "reload" -> Config.readConfig().also {
                         config.options().copyDefaults(true)
-                        println(infoPrefix("Config file reloaded."))
+                        sender.sendMessage(infoPrefix("Config file reloaded."))
                     }
-                    else -> println(helpInfo)
+                    else -> sender.sendMessage(helpInfo)
                 }
             } catch (e: Exception) {
-                println(errorPrefix("Please check args."))
+                sender.sendMessage(errorPrefix("Please check args."))
             }
             true
         }
 
-    fun infoPrefix(string: String) =
-        with(WBAutoFillPlugin.plugin) {
+    private fun infoPrefix(string: String) =
+        with(WBAutoFillPlugin.instance) {
             "${ChatColor.AQUA} [WBAutoFill] ${ChatColor.GOLD}$string"
         }
 
-    fun errorPrefix(string: String) =
-        with(WBAutoFillPlugin.plugin) {
+    private fun errorPrefix(string: String) =
+        with(WBAutoFillPlugin.instance) {
             "${ChatColor.RED} [WBAutoFill] ${ChatColor.GRAY}$string"
         }
 }
