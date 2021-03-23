@@ -69,7 +69,7 @@ fun startFill(fillWorld: String, delayInTicks: Long) =
                 ticks.toLong()
             )
             fillTaskID = task
-            logger.info("WBAF task for world $fillWorld started.")
+            logger.info("WBAF task for world $fillWorld will start soon.")
         } else {
             logger.info("WBAF task failed to start.")
         }
