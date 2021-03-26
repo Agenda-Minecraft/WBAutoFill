@@ -40,7 +40,6 @@ class FillTaskListener : Listener {
                 if (taskID != -1) {
                     Bukkit.getServer().scheduler.cancelTask(taskID)
                 }
-                logger.info("Task $taskID cancelled.")
             }
         }
 
@@ -70,8 +69,6 @@ fun startFill(fillWorld: String, delayInTicks: Long) =
             )
             fillTaskID = task
             logger.info("WBAF task for world $fillWorld will start soon.")
-        } else {
-            logger.info("WBAF task failed to start.")
         }
         fillTaskID
     }
